@@ -22,7 +22,7 @@ describe('UserService', () => {
   });
 
   it('create should pass and return correct user', () => {
-    const testUser: User = {id: 1, username: 'testName', password: 'testPassword'};
+    const testUser: User = {id: 'testId', username: 'testName', password: 'testPassword'};
 
     userService.create(testUser).subscribe(user => {
         expect(user).toEqual(jasmine.objectContaining(testUser));
