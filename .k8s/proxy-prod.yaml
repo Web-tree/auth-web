@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: auth-web-proxy
+  namespace: webtree
+spec:
+  ports:
+    - protocol: TCP
+      name: http
+      port: 80
+      targetPort: 80
+  type: ExternalName
+  externalName: auth-web-webtree.s3-website.eu-central-1.amazonaws.com
+
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: auth-web
+  namespace: webtree
+  annotations:
+    traefik.ingress.kubernetes.io/preserve-host: "false"
+spec:
+  rules:
+    - host: auth.webtree.org
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: auth-web-proxy
+              servicePort: http
