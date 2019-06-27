@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {AlertService} from '../_services/alert.service';
 import {UserService} from '../_services/user.service';
+import {User} from '../_models';
+import {sha512} from 'js-sha512';
 
 @Component({
   selector: 'app-register',
@@ -8,7 +10,7 @@ import {UserService} from '../_services/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  model: any = {};
+  model: User = {};
 
   loading = false;
 
@@ -20,7 +22,8 @@ export class RegisterComponent implements OnInit {
 
   register() {
     this.loading = true;
-    this.userService.create(this.model)
+    const user: User = {username: this.model.username, password: sha512(this.model.password)};
+    this.userService.create(user)
       .subscribe(
         data => {
           this.alertService.success('Registration successful', true);
