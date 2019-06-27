@@ -1,16 +1,15 @@
-import {AppPage} from './pageObjects/app.po';
 import {browser, logging} from 'protractor';
+import {RegisterPage} from './pageObjects/register.po';
 
-describe('workspace-project App', () => {
-  let page: AppPage;
+describe('register page', () => {
+  let page: RegisterPage;
 
   beforeEach(() => {
-    page = new AppPage();
+    page = new RegisterPage();
   });
 
-  it('should display welcome message', () => {
+  it('should open registration page', () => {
     page.navigateTo();
-    expect(page.getTitleText()).toEqual('Auth - Web Tree');
   });
 
   afterEach(async () => {
