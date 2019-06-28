@@ -4,6 +4,7 @@ import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
 import {TokenService} from '../_services/token.service';
 import {User} from '../_models';
+import {sha512} from 'js-sha512';
 
 @Component({
   selector: 'app-login',
@@ -24,16 +25,13 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    // reset login status
-    this.authenticationService.logout();
-
-    // get return url from route parameters or default to '/'
     this.returnUrl = this.route.snapshot.queryParams.returnUrl || '/';
   }
 
   login() {
     this.loading = true;
-    this.authenticationService.login(this.model)
+    const user: User = {username: this.model.username, password: sha512(this.model.password)};
+    this.authenticationService.login(user)
       .subscribe(
         token => {
           this.tokenService.saveToken(token);

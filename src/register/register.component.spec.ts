@@ -18,7 +18,7 @@ describe('RegisterComponent', () => {
   let submitEl: DebugElement;
   let usernameEl: DebugElement;
   let passwordEl: DebugElement;
-  let userService;
+  let userService: UserService;
   let alertService: AlertService;
   const userName = 'someUsername';
   const password = 'somePassword';
@@ -32,7 +32,7 @@ describe('RegisterComponent', () => {
       declarations: [RegisterComponent],
       providers: [
         {provide: UserService, useValue: userService},
-        {provide: AlertService, useValue: userService}
+        {provide: AlertService, useValue: alertService}
       ]
     })
       .compileComponents();
