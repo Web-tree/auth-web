@@ -1,5 +1,7 @@
 # AuthWeb
 
+[![Build Status](https://travis-ci.org/Web-tree/auth-web.svg?branch=master)](https://travis-ci.org/Web-tree/auth-web)
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 
 ## Development server
