@@ -10,6 +10,8 @@ import {TokenService} from '../_services/token.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {FormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
+import {MatInputModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -26,7 +28,12 @@ describe('LoginComponent', () => {
     tokenService = jasmine.createSpyObj('TokenService', ['saveToken']);
     authenticationService = jasmine.createSpyObj('AuthenticationService', ['login', 'logout', 'isAuthorized']);
     TestBed.configureTestingModule({
-      imports: [FormsModule, RouterTestingModule],
+      imports: [
+        FormsModule,
+        RouterTestingModule,
+        MatInputModule,
+        NoopAnimationsModule
+      ],
       declarations: [LoginComponent],
       providers: [
         {provide: AlertService, useValue: alertService},
