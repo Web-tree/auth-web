@@ -1,0 +1,44 @@
+@import '~@angular/material/theming';
+
+$md-auth: (
+  50 : #fbe6ee,
+  100 : #f5c0d4,
+  200 : #ee96b8,
+  300 : #e76c9c,
+  400 : #e14d86,
+  500 : #dc2d71,
+  600 : #d82869,
+  700 : #d3225e,
+  800 : #ce1c54,
+  900 : #c51142,
+  A100 : #fff3f6,
+  A200 : #ffc0cf,
+  A400 : #ff8da8,
+  A700 : #ff7495,
+  contrast: (
+    50 : #000000,
+    100 : #000000,
+    200 : #000000,
+    300 : #000000,
+    400 : #ffffff,
+    500 : #ffffff,
+    600 : #ffffff,
+    700 : #ffffff,
+    800 : #ffffff,
+    900 : #ffffff,
+    A100 : #000000,
+    A200 : #000000,
+    A400 : #000000,
+    A700 : #000000,
+  )
+);
+$auth-primary: mat-palette($md-auth, 700, 300, 900);
+$auth-accent: mat-palette($md-auth);
+$auth-warn: mat-palette($md-auth, A200);
+
+// create theme (use mat-dark-theme for themes with dark backgrounds)
+$auth: mat-light-theme(
+    $auth-primary,
+    $auth-accent,
+    $auth-warn
+);

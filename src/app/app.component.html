@@ -1,7 +1,17 @@
-<div>
-  <h1>
-    Auth - Web Tree
-  </h1>
+<div class="container">
+  <header class="container">
+    <mat-toolbar color="primary">
+      <a href="/">
+        <img id="main-logo" width="50" height="50" src="assets/auth-logo-0.4-50x50.png" alt="WebTree"/>
+      </a>
+      <h1 class="brand">Auth - Web Tree</h1>
+    </mat-toolbar>
+  </header>
+  <div id="content">
+    <mat-card>
+      <div id="content-card">
+        <router-outlet></router-outlet>
+      </div>
+    </mat-card>
+  </div>
 </div>
-
-<router-outlet></router-outlet>

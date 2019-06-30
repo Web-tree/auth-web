@@ -1,0 +1,31 @@
+body {
+  margin: 0;
+  min-width: 300px;
+}
+
+#content {
+  margin-top: 70px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 48px;
+  padding-right: 48px;
+  max-width: 600px;
+}
+#content-card {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+  text-align: center;
+}
+.btn {
+  margin-right: 8px !important;
+}
+.mat-input-element, .mat-form-field-infix {
+  @media (max-width: 600px) {
+    width: 250px !important;
+  }
+  @media (max-width: 350px) {
+    width: 150px !important;
+  }
+  width: 350px !important;
+}

@@ -12,6 +12,8 @@ import {Subject} from 'rxjs';
 import {LoginComponent} from '../login';
 import {AuthenticationService} from '../_services/authentication.service';
 import {TokenService} from '../_services/token.service';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatButtonModule, MatCardModule, MatInputModule, MatToolbarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,13 @@ import {TokenService} from '../_services/token.service';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    // angular material
+    BrowserAnimationsModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule
   ],
   providers: [
     UserService,
