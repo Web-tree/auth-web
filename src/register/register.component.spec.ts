@@ -10,6 +10,8 @@ import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 import {User} from '../_models';
 import {sha512} from 'js-sha512';
+import {MatInputModule} from '@angular/material';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 
 describe('RegisterComponent', () => {
@@ -28,7 +30,13 @@ describe('RegisterComponent', () => {
     userService = jasmine.createSpyObj('UserService', ['create']);
     alertService = jasmine.createSpyObj('AlertService', ['success', 'error']);
     TestBed.configureTestingModule({
-      imports: [FormsModule, RouterTestingModule, HttpClientModule],
+      imports: [
+        FormsModule,
+        RouterTestingModule,
+        HttpClientModule,
+        MatInputModule,
+        NoopAnimationsModule
+      ],
       declarations: [RegisterComponent],
       providers: [
         {provide: UserService, useValue: userService},

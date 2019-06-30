@@ -1,14 +1,15 @@
 import {async, TestBed} from '@angular/core/testing';
 import {RouterTestingModule} from '@angular/router/testing';
 import {AppComponent} from './app.component';
-import {MatToolbarModule} from '@angular/material';
+import {MatCardModule, MatToolbarModule} from '@angular/material';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
         RouterTestingModule,
-        MatToolbarModule
+        MatToolbarModule,
+        MatCardModule
       ],
       declarations: [
         AppComponent
@@ -32,7 +33,7 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('header a.brand').textContent).toContain('Auth - Web Tree');
+    expect(compiled.querySelector('header .brand').textContent).toContain('Auth - Web Tree');
   });
 
   it('should have router outlet', () => {
