@@ -63,6 +63,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
       );
   }
 
+  getToken(): string {
+    return this.tokenService.getToken();
+  }
+
   submitRedirect() {
     this.redirectForm.nativeElement.submit();
   }

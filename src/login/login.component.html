@@ -37,6 +37,6 @@
   </form>
 
   <form [hidden]="true" #redirectForm method="post" [action]="redirectUnionUrl">
-    <input type="hidden" name="token" value="{{tokenService.getToken()}}" />
+    <input type="hidden" name="token" value="{{getToken()}}" />
   </form>
 </div>
