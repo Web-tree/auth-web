@@ -8,7 +8,7 @@ import {DebugElement} from '@angular/core';
 import {AlertService} from '../_services/alert.service';
 import {TokenService} from '../_services/token.service';
 import {AuthenticationService} from '../_services/authentication.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
 import {MatInputModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -25,11 +25,12 @@ describe('LoginComponent', () => {
 
   beforeEach(async(() => {
     alertService = jasmine.createSpyObj('AlertService', ['success', 'error']);
-    tokenService = jasmine.createSpyObj('TokenService', ['saveToken']);
+    tokenService = jasmine.createSpyObj('TokenService', ['saveToken', 'tokenExists', 'getToken']);
     authenticationService = jasmine.createSpyObj('AuthenticationService', ['login', 'logout', 'isAuthorized']);
     TestBed.configureTestingModule({
       imports: [
         FormsModule,
+        ReactiveFormsModule,
         RouterTestingModule,
         MatInputModule,
         NoopAnimationsModule
