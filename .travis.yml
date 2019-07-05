@@ -1,26 +1,13 @@
 language: node_js
-sudo: required
-dist: trusty
-addons:
-  apt:
-    sources:
-      - google-chrome
-    packages:
-      - google-chrome-stable
 node_js:
 - 10.16.0
 git:
   depth: false
 before_script:
-- set -e
-- export DISPLAY=:99.0
-- sh -e /etc/init.d/xvfb start
 - npm install -g @angular/cli
-- ./node_modules/protractor/bin/webdriver-manager update
 script:
 - ng lint
 - npm run test-headless
-- ng e2e
 - ng build --prod
 deploy:
   provider: s3
