@@ -35,8 +35,4 @@
       <a mat-raised-button [routerLink]="['/register']" class="btn btn-link">Register</a>
     </div>
   </form>
-
-  <form [hidden]="true" #redirectForm method="post" [action]="redirectUnionUrl">
-    <input type="hidden" name="token" value="{{getToken()}}" />
-  </form>
 </div>
