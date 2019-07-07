@@ -40,6 +40,9 @@ export class LoginComponent implements OnInit, AfterViewInit {
     if (this.isRedirected && !this.redirectUnionUrl) {
       this.alertService.error('Unknown union ' + this.returnUnion);
     }
+    if (this.isRedirected) {
+      this.submitRedirect();
+    }
   }
 
   login() {
@@ -68,12 +71,11 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   submitRedirect() {
-    this.redirectForm.nativeElement.submit();
+    console.log(123);
+    window.location.href = `${this.redirectUnionUrl}#token=${this.tokenService.getToken()}`;
   }
 
   ngAfterViewInit(): void {
-    if (this.isRedirected) {
-      this.submitRedirect();
-    }
+
   }
 }
