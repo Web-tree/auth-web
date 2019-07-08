@@ -18,8 +18,9 @@ describe('TokenService', () => {
     tokenService = TestBed.get(TokenService);
     tokenName = 'token';
     token = 'Bearer sometokenhere';
+  });
+  afterEach(() => {
     localStorage.clear();
-
   });
 
   it('#saveToken should save token correct', () => {

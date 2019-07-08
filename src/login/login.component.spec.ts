@@ -10,7 +10,7 @@ import {TokenService} from '../_services/token.service';
 import {AuthenticationService} from '../_services/authentication.service';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {RouterTestingModule} from '@angular/router/testing';
-import {MatInputModule} from '@angular/material';
+import {MatInputModule, MatSelectModule} from '@angular/material';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('LoginComponent', () => {
@@ -33,6 +33,7 @@ describe('LoginComponent', () => {
         ReactiveFormsModule,
         RouterTestingModule,
         MatInputModule,
+        MatSelectModule,
         NoopAnimationsModule
       ],
       declarations: [LoginComponent],
@@ -47,11 +48,12 @@ describe('LoginComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
+    fixture.detectChanges();
     component = fixture.componentInstance;
     submitEl = fixture.debugElement.query(By.css('form'));
     usernameEl = fixture.debugElement.query(By.css('input[type=text]'));
     passwordEl = fixture.debugElement.query(By.css('input[type=password]'));
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {
