@@ -71,6 +71,6 @@ export class LoginComponent implements OnInit {
   }
 
   redirect() {
-    window.location.href = `${this.redirectUnionUrl}/applyToken#token=${this.tokenService.getToken()}`;
+    window.location.href = `${this.redirectUnionUrl}#token=${this.tokenService.getToken()}`;
   }
 }
