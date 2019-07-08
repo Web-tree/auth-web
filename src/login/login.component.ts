@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AuthenticationService} from '../_services/authentication.service';
 import {AlertService} from '../_services/alert.service';
@@ -12,7 +12,7 @@ import {FormBuilder} from '@angular/forms';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
 
   model: User = {};
   loading = false;
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
       .subscribe(
         token => {
           this.tokenService.saveToken(token);
-          this.alertService.success('Logged in successfuly');
+          this.alertService.success('Logged in successfully');
         },
         error => {
           this.loading = false;
@@ -71,11 +71,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
   }
 
   submitRedirect() {
-    console.log(123);
-    window.location.href = `${this.redirectUnionUrl}#token=${this.tokenService.getToken()}`;
-  }
-
-  ngAfterViewInit(): void {
-
+    window.location.href = `${this.redirectUnionUrl}/applyToken#token=${this.tokenService.getToken()}`;
   }
 }
