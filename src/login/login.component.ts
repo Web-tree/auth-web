@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
       this.alertService.error('Unknown union ' + this.returnUnion);
     }
     if (this.isRedirected) {
-      this.submitRedirect();
+      this.redirect();
     }
   }
 
@@ -70,7 +70,7 @@ export class LoginComponent implements OnInit {
     return this.tokenService.getToken();
   }
 
-  submitRedirect() {
+  redirect() {
     window.location.href = `${this.redirectUnionUrl}/applyToken#token=${this.tokenService.getToken()}`;
   }
 }
