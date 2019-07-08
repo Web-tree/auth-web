@@ -1,5 +1,5 @@
 <div class="col-md-6 col-md-offset-3">
-
+  <div *ngIf="!loggedIn">
   <h2>Login</h2>
   <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
     <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
@@ -35,4 +35,18 @@
       <a mat-raised-button [routerLink]="['/register']" class="btn btn-link">Register</a>
     </div>
   </form>
+  </div>
+  <div *ngIf="loggedIn">
+    <mat-form-field>
+      <mat-label>Select Union to login</mat-label>
+      <mat-select [(value)]="returnUnion">
+        <mat-option *ngFor="let union of objectValues(unions)" [value]="union.key">
+          {{union.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="loading" class="btn btn-primary" (click)="redirectIfNeeded()">Login to union</button>
+    <button mat-raised-button color="warn" [disabled]="loading" class="btn btn-primary" (click)="logout()">Logout</button>
+
+  </div>
 </div>

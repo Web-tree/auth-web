@@ -10,7 +10,8 @@ import {HttpClientModule} from '@angular/common/http';
 import {Subject} from 'rxjs';
 import {LoginComponent} from '../login';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSnackBarModule, MatToolbarModule} from '@angular/material';
+// tslint:disable-next-line:max-line-length
+import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSelectModule, MatSnackBarModule, MatToolbarModule} from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import {MatButtonModule, MatCardModule, MatIconModule, MatInputModule, MatSnackB
     MatButtonModule,
     MatCardModule,
     MatSnackBarModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule
   ],
   providers: [
     UserService,
