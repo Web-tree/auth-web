@@ -50,8 +50,8 @@ export class LoginComponent implements OnInit {
     const user: User = {username: this.model.username, password: sha512(this.model.password)};
     this.authenticationService.login(user)
       .subscribe(
-        token => {
-          this.tokenService.saveToken(token);
+        res => {
+          this.tokenService.saveToken(JSON.parse(res).token);
           this.alertService.success('Logged in successfully');
         },
         error => {
