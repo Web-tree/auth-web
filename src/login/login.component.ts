@@ -1,8 +1,6 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {AuthenticationService} from '../_services/authentication.service';
-import {AlertService} from '../_services/alert.service';
-import {TokenService} from '../_services/token.service';
+import {AlertService, AuthenticationService, TokenService} from '../_services';
 import {User} from '../_models';
 import {sha512} from 'js-sha512';
 import {FormBuilder} from '@angular/forms';
@@ -14,14 +12,14 @@ import {FormBuilder} from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
 
+  objectValues = Object.values;
   model: User = {};
   loading = false;
-  isRedirected = false;
   returnUnion: string;
-  redirectUnionUrl: string;
   unions = {
-    mydata: 'https://mydata.webtree.org/applyToken'
+    mydata: {key: 'mydata', name: 'My Data', url: 'https://mydata.webtree.org/applyToken'}
   };
+  loggedIn = false;
 
   @ViewChild('redirectForm', {read: ElementRef, static: true}) redirectForm: ElementRef;
 
@@ -35,14 +33,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.returnUnion = this.route.snapshot.queryParams.returnUnion;
-    this.redirectUnionUrl = this.unions[this.returnUnion];
-    this.isRedirected = this.tokenService.tokenExists() && !!this.returnUnion;
-    if (this.isRedirected && !this.redirectUnionUrl) {
-      this.alertService.error('Unknown union ' + this.returnUnion);
-    }
-    if (this.isRedirected) {
-      this.redirect();
-    }
+    this.loggedIn = this.authenticationService.isAuthorized();
+    this.redirectIfNeeded();
   }
 
   login() {
@@ -53,6 +45,7 @@ export class LoginComponent implements OnInit {
         res => {
           this.tokenService.saveToken(JSON.parse(res).token);
           this.alertService.success('Logged in successfully');
+          this.redirectIfNeeded();
         },
         error => {
           this.loading = false;
@@ -70,7 +63,18 @@ export class LoginComponent implements OnInit {
     return this.tokenService.getToken();
   }
 
-  redirect() {
-    window.location.href = `${this.redirectUnionUrl}#token=${this.tokenService.getToken()}`;
+  redirectIfNeeded() {
+    if (this.tokenService.tokenExists() && !!this.returnUnion) {
+      if (this.unions[this.returnUnion]) {
+        window.location.href = `${this.unions[this.returnUnion].url}#token=${this.tokenService.getToken()}`;
+      } else {
+        this.alertService.error('Unknown union ' + this.returnUnion);
+      }
+    }
+  }
+
+  logout() {
+    this.authenticationService.logout();
+    this.loggedIn = false;
   }
 }
