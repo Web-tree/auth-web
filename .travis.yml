@@ -4,7 +4,7 @@ node_js:
 git:
   depth: false
 before_script:
-
+- webdriver-manager update --standalone false --gecko false --versions.chrome 2.37
 - npm install -g @angular/cli
 script:
 - ng lint
