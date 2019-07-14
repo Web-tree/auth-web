@@ -8,6 +8,7 @@ before_script:
 script:
 - ng lint
 - npm run test-headless
+- ng e2e
 - ng build --prod
 deploy:
   provider: s3
