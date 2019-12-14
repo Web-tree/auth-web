@@ -19,7 +19,17 @@ export class AuthenticationService {
     this.tokenService.removeToken();
   }
 
-  isAuthorized(): boolean {
-    return this.tokenService.tokenExists();
+  async isAuthorized(): Promise<boolean> {
+    return this.http.get(environment.backendUrl + 'checkToken')
+      .toPromise()
+      .then(() => {
+        return this.tokenService.tokenExists();
+      }).catch((err) => {
+        if (err.status !== 401) {
+          console.error(err);
+        }
+        this.tokenService.removeToken();
+        return false;
+      });
   }
 }

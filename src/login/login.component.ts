@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
               private alertService: AlertService) {
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.returnUnion = this.route.snapshot.queryParams.returnUnion;
-    this.loggedIn = this.authenticationService.isAuthorized();
+    this.loggedIn = await this.authenticationService.isAuthorized();
     this.redirectIfNeeded();
   }
 
