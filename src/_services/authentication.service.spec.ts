@@ -3,6 +3,8 @@ import {HttpClientTestingModule, HttpTestingController} from '@angular/common/ht
 import {AuthenticationService} from './authentication.service';
 import {TokenService} from './token.service';
 import {User} from '../_models';
+import {environment} from '../environments/environment';
+import Spy = jasmine.Spy;
 
 
 describe('AuthenticationService', () => {
@@ -44,16 +46,43 @@ describe('AuthenticationService', () => {
 
   });
 
-  it('#isAuthorized should return expected value from tokenService', () => {
-    const tokenSpy = jasmine.createSpyObj('TokenService', ['tokenExists']);
-    tokenSpy.tokenExists.and.returnValue(true);
-    const authServiceWithSpy = new AuthenticationService(null, tokenSpy);
+  describe('isAuthorized()', () => {
+    it('should return true then token exists', async (done) => {
+      spyOn(tokenService, 'tokenExists');
+      (tokenService.tokenExists as Spy).and.returnValue(true);
 
-    expect(authServiceWithSpy.isAuthorized()).toBeTruthy();
-    expect(tokenSpy.tokenExists).toHaveBeenCalled();
-    expect(tokenSpy.tokenExists.calls.count()).toBe(1);
+      authService.isAuthorized().then(value => {
+        expect(value).toBeTruthy();
+        done();
+      });
+      verifyHttpCall();
+    });
+
+    it('should return false then token does not exist', async (done) => {
+      spyOn(tokenService, 'tokenExists');
+      (tokenService.tokenExists as Spy).and.returnValue(false);
+
+      authService.isAuthorized().then(value => {
+        expect(value).toBeFalsy();
+        done();
+      });
+      verifyHttpCall();
+    });
+
+    it('should check if token is valid', async (done) => {
+      spyOn(tokenService, 'removeToken');
+      authService.isAuthorized().then(value => {
+        expect(value).toBeFalsy();
+        expect((tokenService.removeToken as Spy).calls.count()).toBe(1);
+        done();
+      });
+      verifyHttpCall({status: 401, statusText: 'Unauthorized'});
+    });
+
+    function verifyHttpCall(status = {}) {
+      const call = httpMock.expectOne(environment.backendUrl + 'checkToken');
+      call.flush('', status);
+    }
   });
 
-
 });
-
