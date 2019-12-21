@@ -20,10 +20,14 @@ export class AuthenticationService {
   }
 
   async isAuthorized(): Promise<boolean> {
-    return this.http.get(environment.backendUrl + 'checkToken')
+    if (!this.tokenService.tokenExists()) {
+      return Promise.resolve(this.tokenService.tokenExists());
+    }
+
+    return this.http.post(environment.backendUrl + 'checkToken', this.tokenService.getToken())
       .toPromise()
       .then(() => {
-        return this.tokenService.tokenExists();
+        return true;
       }).catch((err) => {
         if (err.status !== 401) {
           console.error(err);

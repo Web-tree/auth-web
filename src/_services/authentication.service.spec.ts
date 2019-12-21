@@ -47,9 +47,12 @@ describe('AuthenticationService', () => {
   });
 
   describe('isAuthorized()', () => {
+    afterEach(() => {
+      tokenService.removeToken();
+    });
+
     it('should return true then token exists', async (done) => {
-      spyOn(tokenService, 'tokenExists');
-      (tokenService.tokenExists as Spy).and.returnValue(true);
+      tokenService.saveToken('aToken');
 
       authService.isAuthorized().then(value => {
         expect(value).toBeTruthy();
@@ -59,29 +62,43 @@ describe('AuthenticationService', () => {
     });
 
     it('should return false then token does not exist', async (done) => {
-      spyOn(tokenService, 'tokenExists');
-      (tokenService.tokenExists as Spy).and.returnValue(false);
-
       authService.isAuthorized().then(value => {
         expect(value).toBeFalsy();
         done();
       });
-      verifyHttpCall();
+
     });
 
-    it('should check if token is valid', async (done) => {
-      spyOn(tokenService, 'removeToken');
+    it('should not call backend if token not exists', () => {
+      authService.isAuthorized().then();
+      httpMock.expectNone(environment.backendUrl + 'checkToken');
+    });
+
+    it('should check if token is valid', done => {
+      tokenService.saveToken('aToken');
       authService.isAuthorized().then(value => {
         expect(value).toBeFalsy();
-        expect((tokenService.removeToken as Spy).calls.count()).toBe(1);
+        expect(tokenService.tokenExists()).toBeFalsy();
         done();
       });
       verifyHttpCall({status: 401, statusText: 'Unauthorized'});
     });
 
-    function verifyHttpCall(status = {}) {
+    it('should make post call to backend with token', () => {
+      const token = 'aToken';
+      tokenService.saveToken(token);
+
+      authService.isAuthorized().then();
+
+      const req = verifyHttpCall();
+      expect(req.request.method).toEqual('POST');
+      expect(req.request.body).toEqual(token);
+    });
+
+    function verifyHttpCall(status = {status: 200, statusText: 'Ok'}) {
       const call = httpMock.expectOne(environment.backendUrl + 'checkToken');
       call.flush('', status);
+      return call;
     }
   });
 
