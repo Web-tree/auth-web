@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  backendUrl: 'https://api.webtree.org/auth/'
+  backendUrl: 'https://auth-api.webtree.org/rest/'
 };
