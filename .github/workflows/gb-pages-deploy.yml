@@ -12,16 +12,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: 'Wait for status checks'
-      id: waitforstatuschecks
-      uses: "WyriHaximus/github-action-wait-for-status@f8bbe3bb321919ec6a009bc98121f39874dc8ee0"
+    - name: Wait for build to succeed
+      uses: fountainhead/action-wait-for-check@1.0.0
+      id: wait-for-build
       with:
-        ignoreActions: github-pages-deploy
-        checkInterval: 10
-      env:
-        GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        checkName: build
+        ref: github.event.pull_request.head.sha || github.sha
     - name: Deploy
-      if: steps.waitforstatuschecks.outputs.status == 'success'
+      if: steps.wait-for-build.outputs.conclusion == 'success'
       env: 
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
