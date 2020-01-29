@@ -17,4 +17,4 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         npm ci
-        npm run-script ng deploy --no-silent --cname=${{ secrets.AUTH_URL }}
+        npm run-script ng deploy -- --no-silent --cname=${{ secrets.AUTH_URL }}
