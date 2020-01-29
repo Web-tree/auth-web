@@ -13,7 +13,7 @@ jobs:
     - uses: actions/checkout@v1
     - name: Deploy
       env: 
-        GH_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        PERSONAL_TOKEN: ${{ secrets.ACCESS_TOKEN }}
       run: |
         npm ci
         npm run-script ng deploy -- --no-silent --cname=${{ secrets.AUTH_URL }} --name="Webtree CI/CD tools" --email="cicd@webtree.org"
