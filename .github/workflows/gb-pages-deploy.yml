@@ -15,4 +15,4 @@ jobs:
     - name: Deploy
       run: |
         npm ci
-        ng deploy --no-silent --cname=${{ AUTH_URL }}
+        ng deploy --no-silent --cname=${{ secrets.AUTH_URL }}
