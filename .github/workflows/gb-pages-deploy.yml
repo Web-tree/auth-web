@@ -4,6 +4,7 @@ on:
   push:	
     branches:	
       - master
+      - gb-pages-deploy
 jobs:
   build:
 
