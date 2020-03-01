@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "auth-web",
     "public": "dist/auth-web",
     "ignore": [
       "firebase.json",
