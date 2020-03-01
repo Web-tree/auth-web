@@ -1,0 +1,26 @@
+name: web-deploy
+
+on:
+  push:
+    branches:
+      - master
+      - release/*
+jobs:
+  web-deploy:
+
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Npm ci & build
+      run: |
+        npm ci
+        npm run build:prod
+    - uses: w9jds/firebase-action@v1.3.0
+      with:
+        args: deploy --only hosting
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
