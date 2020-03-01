@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - release/*
+      - firebase-deploy
 jobs:
   web-deploy:
 
