@@ -24,4 +24,4 @@ jobs:
           git config --local user.email "cicd@webtree.org"
           git config --local user.name "Webtree CI/CD"
           npm version patch
-          git push --tags --author ""
+          git push --tags
