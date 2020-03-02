@@ -18,7 +18,7 @@ jobs:
          node-version: ${{ matrix.node-version }}
       - name: Bump version and push tag
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
+          GITHUB_TOKEN: ${{ secrets.CICD_GITHUB_TOKEN }} # This token is provided by Actions, you do not need to create your own token
         run: |
           git config --local user.email "cicd@webtree.org"
           git config --local user.name "Webtree CI/CD"
