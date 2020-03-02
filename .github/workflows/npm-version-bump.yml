@@ -2,7 +2,7 @@ on:
   push:
     branches: 
       - master
-        - test
+      - test
 
 name: Bump version
 
