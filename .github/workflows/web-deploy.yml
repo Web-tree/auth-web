@@ -2,7 +2,7 @@ name: web-deploy
 
 on:
   release: 
-    - published
+   types: [published]
     
 jobs:
   web-deploy:
