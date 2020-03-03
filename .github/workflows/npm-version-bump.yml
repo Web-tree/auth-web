@@ -21,7 +21,6 @@ jobs:
         run: |
           git config --local user.email "cicd@webtree.org"
           git config --local user.name "Webtree CI/CD"
-          git remote set-url origin https://cicd-webtree:${{ secrets.CICD_GITHUB_TOKEN }}@github.com/Web-tree/auth-web.git
           npm version patch
-          git push
+          git push https://cicd-webtree:${{ secrets.CICD_GITHUB_TOKEN }}@github.com/Web-tree/auth-web.git
           git push --tags
