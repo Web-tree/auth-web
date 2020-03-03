@@ -1,10 +1,8 @@
 name: web-deploy
 
 on:
-#   release: 
-#     - published
-  push:
-    branches: firebase-deploy
+  release: 
+    - published
     
 jobs:
   web-deploy:
