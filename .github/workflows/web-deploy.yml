@@ -1,10 +1,9 @@
 name: web-deploy
 
 on:
-  push:
-    branches:
-      - master
-      - release/*
+  release: 
+  - published
+    
 jobs:
   web-deploy:
 
