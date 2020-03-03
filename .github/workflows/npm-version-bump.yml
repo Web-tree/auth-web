@@ -23,4 +23,4 @@ jobs:
           git config --local user.name "Webtree CI/CD"
           npm version patch
           git push https://cicd-webtree:${{ secrets.CICD_GITHUB_TOKEN }}@github.com/Web-tree/auth-web.git
-          git push --tags
+          git push --tags https://cicd-webtree:${{ secrets.CICD_GITHUB_TOKEN }}@github.com/Web-tree/auth-web.git
