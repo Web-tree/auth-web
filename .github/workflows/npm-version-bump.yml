@@ -13,14 +13,35 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@master
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-         node-version: ${{ matrix.node-version }}
-      - name: Bump version and push tag
+         node-version: 12.x
+      - name: Build production dist
         run: |
-          git config --local user.email "cicd@webtree.org"
-          git config --local user.name "Webtree CI/CD"
-          npm version patch
-          git push https://cicd-webtree:e6e941940286b967302f0b460e60dec802c68351@github.com/Web-tree/auth-web.git
-          #git push --tags https://cicd-webtree:${{ secrets.CICD_GITHUB_TOKEN }}@github.com/Web-tree/auth-web.git
+          npm ci
+          npm run build:prod
+      - name: Pack release
+        run: |
+          zip auth-web.zip dist/auth-web/*
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_NAME: $(`date +%Y-%m-%d-` + ${{ github.ref }}) 
+        with:
+          tag_name: ${{ env.RELEASE_NAME }}
+          release_name: Release ${{ env.RELEASE_NAME }}
+          draft: false
+          prerelease: true
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./auth-web.zip
+          asset_name: auth-web.zip
+          asset_content_type: application/zip
