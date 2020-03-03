@@ -2,13 +2,12 @@ on:
   push:
     branches: 
       - master
-      - test
 
-name: Bump version
+name: Pre-release creation
 
 jobs:
-  tag-next-version:
-    name: Bump version
+  pre-release:
+    name: Pre-release creation
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
