@@ -2,9 +2,6 @@ name: web-deploy
 
 on:
   release:
-  push:
-    tags: 
-      - v*
     
 jobs:
   web-deploy:
@@ -19,8 +16,7 @@ jobs:
         
     - name: tst
       run: |
-        ls
-        env
+        echo ${github.event}
 #     - name: Npm ci & build
 #       run: |
 #         npm ci
