@@ -1,7 +1,7 @@
 name: web-deploy
 
 on:
-  release:
+  release
     
 jobs:
   web-deploy:
