@@ -2,7 +2,9 @@ name: web-deploy
 
 on:
   release:
-    types: [published]
+  push:
+    tags: 
+      - v*
     
 jobs:
   web-deploy:
