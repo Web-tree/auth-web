@@ -1,14 +1,8 @@
 name: web-deploy
 
 on:
-  release:
-    types:
-      - published
-      - unpublished
-      - created
-      - edited
-      - deleted
-      - prereleased
+    release:
+        types: [published]
     
 jobs:
   web-deploy:
