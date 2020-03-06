@@ -17,7 +17,8 @@ export class LoginComponent implements OnInit {
   loading = false;
   returnUnion: string;
   unions = {
-    mydata: {key: 'mydata', name: 'My Data', url: 'https://mydata.webtree.org/applyToken'}
+    mydata: {key: 'mydata', name: 'My Data', url: 'https://mydata.webtree.org/applyToken'},
+    imprint: {key: 'Imprint', name: 'Imprint', url: 'https://imprint.webtree.org/applyToken'}
   };
   loggedIn = false;
 
