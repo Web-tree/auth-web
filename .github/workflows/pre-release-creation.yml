@@ -22,7 +22,7 @@ jobs:
           npm run build:prod
       - name: Pack release
         run: |
-          zip auth-web.zip dist/auth-web/*
+          zip -r auth-web.zip dist/auth-web/*
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
