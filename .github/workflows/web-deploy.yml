@@ -5,7 +5,7 @@ on:
     
 jobs:
   web-deploy:
-
+    if: ${{ github.event.action == 'published' }}
     runs-on: ubuntu-latest
     
     steps:
