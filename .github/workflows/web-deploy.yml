@@ -2,7 +2,6 @@ name: web-deploy
 
 on:
   release:
-  push:
     types: [released]
     
 jobs:
