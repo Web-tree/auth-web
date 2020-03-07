@@ -2,6 +2,8 @@ name: web-deploy
 
 on:
   release:
+  push:
+    types: [released]
     
 jobs:
   web-deploy:
@@ -15,13 +17,13 @@ jobs:
         node-version: '12.x'
         
     - name: Deploy
-      run: |
-        echo ${{ github.event.action}}
 #       run: |
-#         wget ${{ github.event.release.assets[0].browser_download_url }}
-#         unzip auth-web.zip  
-#     - uses: w9jds/firebase-action@v1.3.0
-#       with:
-#         args: deploy --only hosting:auth-web
-#       env:
-#         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+#         echo ${{ github.event.action}}
+      run: |
+        wget ${{ github.event.release.assets[0].browser_download_url }}
+        unzip auth-web.zip  
+    - uses: w9jds/firebase-action@v1.3.0
+      with:
+        args: deploy --only hosting:auth-web
+      env:
+        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
