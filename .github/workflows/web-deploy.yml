@@ -6,7 +6,6 @@ on:
     
 jobs:
   web-deploy:
-#     if: ${{ github.event.action == 'published' }}
     runs-on: ubuntu-latest
     
     steps:
@@ -16,8 +15,6 @@ jobs:
         node-version: '12.x'
         
     - name: Deploy
-#       run: |
-#         echo ${{ github.event.action}}
       run: |
         wget ${{ github.event.release.assets[0].browser_download_url }}
         unzip auth-web.zip  
