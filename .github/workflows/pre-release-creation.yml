@@ -45,6 +45,6 @@ jobs:
           asset_content_type: application/zip
       - name: Deploy at dev environment
         run: |
-          npm i -g firebase
+          npm i -g firebase-tools
           firebase use dev
           firebase deploy --only hosting:dev --token ${{ secrets.FIREBASE_DEV_TOKEN }}
