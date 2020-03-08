@@ -1,5 +1,22 @@
 {
   "projects": {
-    "default": "imprint-web"
+    "prod": "webtree-auth",
+    "dev": "webtree-auth-dev"
+  },
+  "targets": {
+    "webtree-auth": {
+      "hosting": {
+        "prod": [
+          "webtree-auth"
+        ]
+      }
+    },
+    "webtree-auth-dev": {
+      "hosting": {
+        "dev": [
+          "webtree-auth-dev"
+        ]
+      }
+    }
   }
 }
