@@ -46,5 +46,5 @@ jobs:
       - name: Deploy at dev environment
         run: |
           npm i -g firebase-tools
-          firebase use dev
+          firebase use dev --token ${{ secrets.FIREBASE_DEV_TOKEN }}
           firebase deploy --only hosting:dev --token ${{ secrets.FIREBASE_DEV_TOKEN }}
