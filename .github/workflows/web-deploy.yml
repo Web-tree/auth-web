@@ -19,6 +19,6 @@ jobs:
         unzip auth-web.zip
     - name: Deploy at prod environment
       run: |
-        npm i -g firebase
-        firebase use prod
+        npm i -g firebase-tools
+        firebase use prod --token ${{ secrets.FIREBASE_PROD_TOKEN }}
         firebase deploy --only hosting:prod --token ${{ secrets.FIREBASE_PROD_TOKEN }}
