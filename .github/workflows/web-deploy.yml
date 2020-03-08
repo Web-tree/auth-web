@@ -3,23 +3,22 @@ name: web-deploy
 on:
   release:
     types: [released]
-    
+
 jobs:
   web-deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-        
-    - name: Deploy
+    - name: Download release assets
       run: |
         wget ${{ github.event.release.assets[0].browser_download_url }}
-        unzip auth-web.zip  
-    - uses: w9jds/firebase-action@v1.3.0
-      with:
-        args: deploy --only hosting:auth-web
-      env:
-        FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+        unzip auth-web.zip
+    - name: Deploy at prod environment
+      run: |
+        npm i -g firebase
+        firebase use prod
+        firebase deploy --only hosting:prod --token ${{ secrets.FIREBASE_PROD_TOKEN }}
