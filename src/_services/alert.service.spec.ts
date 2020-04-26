@@ -1,28 +1,24 @@
 import {TestBed} from '@angular/core/testing';
 import {AlertService} from './alert.service';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatSnackBar} from '@angular/material';
 
+import {MatSnackBar} from '@angular/material';
+jest.mock('@angular/material');
 
 describe('Alert Service', () => {
-
   let alertService: AlertService;
-  let snackBar: MatSnackBar;
-  const msg = 'testMessage';
+  let snackBar: jest.Mocked<MatSnackBar>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         AlertService,
-      ],
-      imports: [
-        RouterTestingModule.withRoutes([]),
+        MatSnackBar
       ]
     });
-    snackBar = jasmine.createSpyObj('MatSnackBar', ['open']);
-    alertService = new AlertService(snackBar);
+    snackBar = TestBed.get(MatSnackBar);
+    alertService = TestBed.get(AlertService);
   });
-  //
+
   it('should open snack bar on success message', () => {
     const message = 'someMessage';
     alertService.success(message);
