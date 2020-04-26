@@ -1,17 +1,20 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {RouterTestingModule} from '@angular/router/testing';
+import {By} from '@angular/platform-browser';
+import {DebugElement} from '@angular/core';
+import {of} from 'rxjs';
 
 import {LoginComponent} from './login.component';
 import {User} from '../_models';
-import {sha512} from 'js-sha512';
-import {By} from '@angular/platform-browser';
-import {DebugElement} from '@angular/core';
+
+import {AppModuleMock} from '../app/app.module.mock';
 import {AlertService} from '../_services/alert.service';
 import {TokenService} from '../_services/token.service';
 import {AuthenticationService} from '../_services/authentication.service';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RouterTestingModule} from '@angular/router/testing';
-import {MatInputModule, MatSelectModule} from '@angular/material';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
+
+jest.mock('../_services/alert.service');
+jest.mock('../_services/token.service');
+jest.mock('../_services/authentication.service');
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -19,34 +22,27 @@ describe('LoginComponent', () => {
   let submitEl: DebugElement;
   let usernameEl: DebugElement;
   let passwordEl: DebugElement;
-  let alertService: AlertService;
-  let tokenService: TokenService;
-  let authenticationService: AuthenticationService;
+  let authenticationService: jest.Mocked<AuthenticationService>;
 
   beforeEach(async(() => {
-    alertService = jasmine.createSpyObj('AlertService', ['success', 'error']);
-    tokenService = jasmine.createSpyObj('TokenService', ['saveToken', 'tokenExists', 'getToken']);
-    authenticationService = jasmine.createSpyObj('AuthenticationService', ['login', 'logout', 'isAuthorized']);
     TestBed.configureTestingModule({
       imports: [
-        FormsModule,
-        ReactiveFormsModule,
         RouterTestingModule,
-        MatInputModule,
-        MatSelectModule,
-        NoopAnimationsModule
+        AppModuleMock,
       ],
       declarations: [LoginComponent],
       providers: [
-        {provide: AlertService, useValue: alertService},
-        {provide: TokenService, useValue: tokenService},
-        {provide: AuthenticationService, useValue: authenticationService}
+        AlertService,
+        TokenService,
+        AuthenticationService,
       ]
     })
       .compileComponents();
   }));
 
   beforeEach(() => {
+    authenticationService = TestBed.get(AuthenticationService);
+    authenticationService.login.mockImplementation(() => of('user'));
     fixture = TestBed.createComponent(LoginComponent);
     fixture.detectChanges();
     component = fixture.componentInstance;
@@ -61,13 +57,16 @@ describe('LoginComponent', () => {
   });
 
   it('should pass user to the service when form is submitted', () => {
-    component.model = {password: 'somePassword', username: 'someUsername'};
-
+    const expectedUser: User = {username: 'someUsername', password: 'somePassword'};
     spyOn(component, 'login').and.callThrough();
+    usernameEl.nativeElement.value = expectedUser.username;
+    usernameEl.nativeElement.dispatchEvent(new Event('input'));
+    passwordEl.nativeElement.value = expectedUser.password;
+    passwordEl.nativeElement.dispatchEvent(new Event('input'));
+
     submitEl.triggerEventHandler('ngSubmit', null);
 
     expect(component.login).toHaveBeenCalled();
-    const expectedUser: User = {username: 'someUsername', password: sha512('somePassword')};
     expect(authenticationService.login).toHaveBeenCalledWith(expectedUser);
   });
 });

@@ -1,17 +1,18 @@
 import {TestBed} from '@angular/core/testing';
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {AuthenticationService} from './authentication.service';
-import {TokenService} from './token.service';
 import {User} from '../_models';
+import {TokenService} from './token.service';
 import {environment} from '../environments/environment';
-import Spy = jasmine.Spy;
 
+jest.mock('./token.service');
+jest.mock('../environments/environment');
 
 describe('AuthenticationService', () => {
 
   let authService: AuthenticationService;
   let httpMock: HttpTestingController;
-  let tokenService: TokenService;
+  let tokenService: jest.Mocked<TokenService>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -25,34 +26,32 @@ describe('AuthenticationService', () => {
 
   });
 
-  it('#login should sent request with correct data', () => {
+  it('#login should sent request with correct data', (done) => {
     const user: User = {username: 'testUser', password: 'testPassword'};
 
-    authService.login(user).subscribe(() => {});
+    authService.login(user).subscribe((res) => {
+      expect(res).toEqual('someResponse');
+      done();
+    });
 
     const req = httpMock.expectOne('http://localhost:9000/rest/token/new');
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(user);
+    req.flush('someResponse');
     httpMock.verify();
   });
 
   it('#logout should call tokenService.removeToken()', () => {
-    const tokenSpy = jasmine.createSpyObj('TokenService', ['removeToken']);
-    const authServiceWithSpy = new AuthenticationService(null, tokenSpy);
-
-    authServiceWithSpy.logout();
-    expect(tokenSpy.removeToken).toHaveBeenCalled();
-    expect(tokenSpy.removeToken.calls.count()).toBe(1);
+    authService.logout();
+    expect(tokenService.removeToken).toHaveBeenCalled();
+    expect(tokenService.removeToken.mock.calls).toHaveLength(1);
 
   });
 
   describe('isAuthorized()', () => {
-    afterEach(() => {
-      tokenService.removeToken();
-    });
-
-    it('should return true then token exists', async (done) => {
-      tokenService.saveToken('aToken');
+    it('should return true then token exists', (done) => {
+      tokenService.tokenExists.mockImplementation(() => true);
+      tokenService.getToken.mockImplementation(() => 'testToken');
 
       authService.isAuthorized().then(value => {
         expect(value).toBeTruthy();
@@ -75,10 +74,11 @@ describe('AuthenticationService', () => {
     });
 
     it('should check if token is valid', done => {
-      tokenService.saveToken('aToken');
+      tokenService.tokenExists.mockImplementation(() => true);
+      tokenService.getToken.mockImplementation(() => 'wrongToken');
+
       authService.isAuthorized().then(value => {
         expect(value).toBeFalsy();
-        expect(tokenService.tokenExists()).toBeFalsy();
         done();
       });
       verifyHttpCall({status: 401, statusText: 'Unauthorized'});
@@ -86,7 +86,8 @@ describe('AuthenticationService', () => {
 
     it('should make post call to backend with token', () => {
       const token = 'aToken';
-      tokenService.saveToken(token);
+      tokenService.tokenExists.mockImplementation(() => true);
+      tokenService.getToken.mockImplementation(() => token);
 
       authService.isAuthorized().then();
 
