@@ -2,6 +2,7 @@ on:
   push:
     branches:
       - master
+      - Max-Levitskiy-patch-1
 
 name: Pre-release creation
 
