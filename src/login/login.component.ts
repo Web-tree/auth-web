@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
 
   async ngOnInit() {
     this.returnUnion = this.route.snapshot.queryParams.returnUnion;
-    this.loggedIn = await this.authenticationService.isAuthorized();
+    await this.updateIsLoginField();
     this.redirectIfNeeded();
   }
 
@@ -43,10 +43,13 @@ export class LoginComponent implements OnInit {
     const user: User = {username: this.model.username, password: sha512(this.model.password)};
     this.authenticationService.login(user)
       .subscribe(
-        res => {
+        async res => {
           this.tokenService.saveToken(JSON.parse(res).token);
           this.alertService.success('Logged in successfully');
-          this.redirectIfNeeded();
+          if (!this.redirectIfNeeded()) {
+            await this.updateIsLoginField();
+            this.loading = false;
+          }
         },
         error => {
           this.loading = false;
@@ -60,6 +63,10 @@ export class LoginComponent implements OnInit {
       );
   }
 
+  private async updateIsLoginField() {
+    this.loggedIn = await this.authenticationService.isAuthorized();
+  }
+
   getToken(): string {
     return this.tokenService.getToken();
   }
@@ -71,6 +78,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.alertService.error('Unknown union ' + this.returnUnion);
       }
+      return true;
+    } else {
+      return false;
     }
   }
 
