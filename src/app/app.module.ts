@@ -1,22 +1,23 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {NgModule} from '@angular/core';
+import {HttpClientModule} from '@angular/common/http';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {RegisterComponent} from '../register';
-import {AlertService, AuthenticationService, TokenService, UserService} from '../_services';
-import {HttpClientModule} from '@angular/common/http';
-import {Subject} from 'rxjs';
-import {LoginComponent} from '../login';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {RegisterComponent} from '../register/register.component';
+import {LoginComponent} from '../login/login.component';
 import {MaterialModule} from './material.module';
+import {unions, UNIONS_TOKEN} from '../_constants/unions';
+import {SelectUnionComponent} from '../select-union/select-union.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegisterComponent,
+    SelectUnionComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,11 +29,10 @@ import {MaterialModule} from './material.module';
     MaterialModule
   ],
   providers: [
-    UserService,
-    AlertService,
-    AuthenticationService,
-    TokenService,
-    Subject
+    {
+      provide: UNIONS_TOKEN,
+      useValue: unions
+    }
   ],
   bootstrap: [AppComponent]
 })

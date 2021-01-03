@@ -4,7 +4,7 @@ import {By} from '@angular/platform-browser';
 import {DebugElement} from '@angular/core';
 
 import {RegisterComponent} from './register.component';
-import {User} from '../_models';
+import {User} from '../_models/User';
 
 import {AppModuleMock} from '../app/app.module.mock';
 import {AlertService} from '../_services/alert.service';

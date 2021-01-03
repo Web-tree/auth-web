@@ -2,7 +2,7 @@ import {UserService} from './user.service';
 import {TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
-import {User} from '../_models';
+import {User} from '../_models/User';
 
 describe('UserService', () => {
 

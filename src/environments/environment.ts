@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  backendUrl: 'http://localhost:9000/rest/',
+  backendUrl: 'https://auth-api.webtree.org/rest/',
 };
 
 /*

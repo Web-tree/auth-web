@@ -1,0 +1,13 @@
+<mat-form-field>
+  <mat-label>Select Union to login</mat-label>
+  <mat-select #unionSelector>
+    <mat-option *ngFor="let union of unions" [value]="union.key">
+      {{union.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<button mat-raised-button color="primary" class="btn btn-primary" (click)="redirectToUnion(unionSelector.value)">
+  Login to union
+</button>
+<button mat-raised-button color="warn" class="btn btn-primary" (click)="logout()">Logout
+</button>

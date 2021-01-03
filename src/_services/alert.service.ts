@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {MatSnackBar} from '@angular/material';
 
-@Injectable()
+@Injectable({ providedIn: 'root'})
 export class AlertService {
 
   constructor(private snackBar: MatSnackBar) {
