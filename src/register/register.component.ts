@@ -4,6 +4,8 @@ import {UserService} from '../_services/user.service';
 import {User} from '../_models/User';
 import {sha512} from 'js-sha512';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {finalize} from 'rxjs/operators';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -20,21 +22,23 @@ export class RegisterComponent {
   loading = false;
 
   constructor(private userService: UserService,
-              private alertService: AlertService) {
+              private alertService: AlertService,
+              private router: Router) {
   }
 
   onSubmit({username, password}) {
     this.loading = true;
     const user: User = {username, password: sha512(password)};
     this.userService.create(user)
+      .pipe(finalize(() => {
+        this.loading = false;
+      }))
       .subscribe(
-        data => {
-          if (data === null) {
-            this.alertService.error('Registration unsuccessful');
-          } else {
-            this.alertService.success('Registration successful');
-          }
-          // this.router.navigate(['/login']);
+        () => {
+          this.alertService.success('Registration successful');
+          this.router.navigate(['/login']);
+        }, (error: string) => {
+          this.alertService.error(error);
         });
   }
 }

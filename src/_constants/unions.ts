@@ -2,7 +2,8 @@ import {InjectionToken} from '@angular/core';
 
 export const unions: UnionMap = {
   mydata: {key: 'mydata', name: 'My Data', url: 'https://mydata.webtree.org/applyToken'},
-  imprint: {key: 'imprint', name: 'Imprint', url: 'https://imprint.webtree.org/applyToken'}
+  imprint: {key: 'imprint', name: 'Imprint', url: 'https://imprint.webtree.org/applyToken'},
+  unions: {key: 'unions', name: 'Unions', url: 'https://unions.webtree.org/!/applyToken'}
 };
 
 export interface Union {
