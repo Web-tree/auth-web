@@ -4,6 +4,7 @@ import {AlertService, AuthenticationService, TokenService} from '../_services';
 import {User} from '../_models';
 import {sha512} from 'js-sha512';
 import {FormBuilder} from '@angular/forms';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,10 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
+    if (!environment.production) {
+      // @ts-ignore
+      this.unions.localhost = {key: 'localhost', name: 'Localhost', url: 'http://localhost:4200/applyToken'};
+    }
     this.returnUnion = this.route.snapshot.queryParams.returnUnion;
     await this.updateIsLoginField();
     this.redirectIfNeeded();
