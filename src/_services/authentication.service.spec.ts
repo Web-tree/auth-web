@@ -34,7 +34,7 @@ describe('AuthenticationService', () => {
       done();
     });
 
-    const req = httpMock.expectOne('http://localhost:9000/rest/token/new');
+    const req = httpMock.expectOne(environment.backendUrl + 'token/new');
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(user);
     req.flush('someResponse');

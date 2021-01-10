@@ -3,6 +3,7 @@ import {TestBed} from '@angular/core/testing';
 
 import {HttpClientTestingModule, HttpTestingController} from '@angular/common/http/testing';
 import {User} from '../_models';
+import {environment} from '../environments/environment';
 
 describe('UserService', () => {
 
@@ -27,7 +28,7 @@ describe('UserService', () => {
         expect(user).toEqual(jasmine.objectContaining(testUser));
       }
     );
-    const req = httpMock.expectOne('http://localhost:9000/rest/user/register');
+    const req = httpMock.expectOne(environment.backendUrl + 'user/register');
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(testUser);
     req.flush(testUser);
