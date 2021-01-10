@@ -5,7 +5,7 @@ on:
     types: [released]
 
 jobs:
-  web-deploy:
+  web-deploy-prod:
     runs-on: ubuntu-latest
 
     steps:
