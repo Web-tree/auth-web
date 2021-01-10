@@ -1,0 +1,24 @@
+name: web-deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  web-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - name: Build
+      run: |
+        npm run build:dev
+    - name: Deploy at dev environment
+      run: |
+        npm i -g firebase-tools
+        firebase use dev --token ${{ secrets.FIREBASE_PROD_TOKEN }}
+        firebase deploy --only hosting:prod --token ${{ secrets.FIREBASE_PROD_TOKEN }}

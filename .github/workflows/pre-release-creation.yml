@@ -43,8 +43,3 @@ jobs:
           asset_path: ./auth-web.zip
           asset_name: auth-web.zip
           asset_content_type: application/zip
-      - name: Deploy at dev environment
-        run: |
-          npm i -g firebase-tools
-          firebase use dev --token ${{ secrets.FIREBASE_DEV_TOKEN }}
-          firebase deploy --only hosting:dev --token ${{ secrets.FIREBASE_DEV_TOKEN }}
